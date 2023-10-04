@@ -15,7 +15,12 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.10.0'
 
     // mocks
+    testImplementation 'org.mockito:mockito-junit-jupiter:5.5.0'
     testImplementation 'org.mockito:mockito-core:5.5.0'
+
+    // mocks static
+    testImplementation 'org.mockito:mockito-inline:5.2.0'
+
 }
 
 test {
