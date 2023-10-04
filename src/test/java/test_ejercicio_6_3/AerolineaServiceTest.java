@@ -40,6 +40,33 @@ public class AerolineaServiceTest {
 
     @Test
     public void testReservaVueloDiaDomingo(){
+        try (MockedStatic<AerolineaServiceUtils> utilities = Mockito.mockStatic(AerolineaServiceUtils.class)) {
+            utilities.when(() -> AerolineaServiceUtils.existenPasajes("La Paz", 2)).thenReturn(true);
+            utilities.when(() -> AerolineaServiceUtils.getDay(28, 5, 2023)).thenReturn("Domingo");
 
+            AerolineService aerolineService = new AerolineService();
+            String respuesta = aerolineService.reservaVuelo("La Paz", 2, 28, 5, 2023);
+
+            Assertions.assertEquals("el dia Domingo 28 Mayo 2023 existen 2 pasajes para La Paz", respuesta);
+
+            utilities.verify(() -> AerolineaServiceUtils.existenPasajes("La Paz", 2));
+            utilities.verify(() -> AerolineaServiceUtils.getDay(28, 5, 2023));
+        }
+    }
+
+    @Test
+    public void testReservaVueloMesDiferente(){
+        try (MockedStatic<AerolineaServiceUtils> utilities = Mockito.mockStatic(AerolineaServiceUtils.class)) {
+            utilities.when(() -> AerolineaServiceUtils.existenPasajes("La Paz", 2)).thenReturn(true);
+            utilities.when(() -> AerolineaServiceUtils.getDay(1, 6, 2023)).thenReturn("Jueves");
+
+            AerolineService aerolineService = new AerolineService();
+            String respuesta = aerolineService.reservaVuelo("La Paz", 2, 1, 6, 2023);
+
+            Assertions.assertEquals("el dia Jueves 1 Junio 2023 existen 2 pasajes para La Paz", respuesta);
+
+            utilities.verify(() -> AerolineaServiceUtils.existenPasajes("La Paz", 2));
+            utilities.verify(() -> AerolineaServiceUtils.getDay(1, 6, 2023));
+        }
     }
 }
