@@ -14,7 +14,7 @@ public class AerolineaServiceTest {
         Mockito.doReturn("Lunes").when(aerolineService).getDay(29, 5,2023);
 
         String respuesta = aerolineService.reservaVuelo("La Paz", 2, 29, 5, 2023);
-        Assertions.assertEquals("el dia Lunes 29 de Mayo 2023 existen 2 pasajes para La Paz", respuesta);
+        Assertions.assertEquals("el dia Lunes 29 Mayo 2023 existen 2 pasajes para La Paz", respuesta);
 
         Mockito.verify(aerolineService).existenPasajes("La Paz", 2);
         Mockito.verify(aerolineService).getDay(29, 5, 2023);
@@ -24,7 +24,7 @@ public class AerolineaServiceTest {
     public void testReservaVueloSinPasajesDisponibles(){
         AerolineService aerolineService = Mockito.spy(new AerolineService());
 
-        Mockito.doReturn(false).when(aerolineService.existenPasajes("La Paz",3));
+        Mockito.doReturn(false).when(aerolineService).existenPasajes("La Paz",3);
         String respuesta = aerolineService.reservaVuelo("La Paz", 3, 15, 6, 2023);
         Assertions.assertEquals("no existen suficientes pasajes para La Paz", respuesta);
 
